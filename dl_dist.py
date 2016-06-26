@@ -1,4 +1,6 @@
 import numpy as np
+global debug;
+debug= True
 '''
 Builds over the OASD (Optimal String Alignment Dist)
 to compute the Damerau-Levenshtein distance with
@@ -18,8 +20,12 @@ def dl_dist(cn_word, sl_word):
 	'''
 
 	#second parameter here is the size of the alphabet
-	d_canon = np.zeros((1, 26))
+	da = np.zeros((26,))
 	d = np.zeros((len(cn_word)+1, len(sl_word)+1))
+
+	#building the alphabet dictionaries here
+	alphabet_dict={}
+	
 
 	maxdist = len(cn_word)+len(sl_word)
 	d[0,0] = maxdist
@@ -32,9 +38,9 @@ def dl_dist(cn_word, sl_word):
 		d[1, j] = j
 
 	for i in range(1, len(cn_word)):
-		d_slang = 0
+		db = 0
 		for j in range(1, len(sl_word)):
-			k = d_canon[sl_word[j]]
+			k = da[ord(sl_word[j])]
 			l = d_slang
 			if cn_word[i] == sl_word[j]:
 				cost = 0
@@ -46,5 +52,21 @@ def dl_dist(cn_word, sl_word):
 			                    d[i,j+1] +1,
 			                    d[k, l] + (i-k-1)+ 1 + (j-l-1)
 			                    ])
-		d_canon[cn_word[i]] = i
-	return d[len(cn_word)+1, len(sl_word)+1]	
+		da[cn_word[i]] = i
+
+		if debug:
+			print("Debug: i = ", i, "\n")
+			print("Debug: j = ", j, "\n")
+			print("Debug: d_canon = ", da, "\n")
+			print("Debug: d_slang = ", db, "\n")
+			print("Debug: d = \n")
+			print(d)
+
+	return d[len(cn_word)+1, len(sl_word)+1]
+
+
+sl_word = input("Please enter slang word: ")
+cn_word = input("Please enter canon word: ")
+output = dl_dist(cn_word, sl_word)
+print('Output of Damerau-Levenshtein is:'+'\n')
+print(output)
