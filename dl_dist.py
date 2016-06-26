@@ -46,7 +46,11 @@ def dl_dist(cn_word, sl_word):
 	for i in range(1, len(cn_word)):
 		db = 0
 		for j in range(1, len(sl_word)):
-			k = da[ord(sl_word[j])]
+			da_idx = alphabet_dict[ord(sl_word[j])]%97
+			if debug:
+				print("da_idx: ", da_idx)
+
+			k = da[da_idx]
 			l = db
 			if cn_word[i] == sl_word[j]:
 				cost = 0
