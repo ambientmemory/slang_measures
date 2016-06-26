@@ -25,7 +25,9 @@ def dl_dist(cn_word, sl_word):
 
 	#building the alphabet dictionaries here
 	alphabet_dict={}
-	
+	starter_int = 96 #ascii: little a = 97
+	for i in range(1,27):
+		alphabet_dict[chr(starter_int+i)] = ord(chr(starter_int+i))
 
 	maxdist = len(cn_word)+len(sl_word)
 	d[0,0] = maxdist
@@ -41,10 +43,10 @@ def dl_dist(cn_word, sl_word):
 		db = 0
 		for j in range(1, len(sl_word)):
 			k = da[ord(sl_word[j])]
-			l = d_slang
+			l = db
 			if cn_word[i] == sl_word[j]:
 				cost = 0
-				d_slang = j
+				db = j
 			else:
 				cost = 1
 			d[i+1, j+1] = min([ d[i,j]+cost,
