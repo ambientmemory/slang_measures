@@ -24,10 +24,14 @@ def dl_dist(cn_word, sl_word):
 	d = np.zeros((len(cn_word)+1, len(sl_word)+1))
 
 	#building the alphabet dictionaries here
+	# ascii: little a = 97
 	alphabet_dict={}
-	starter_int = 96 #ascii: little a = 97
+	starter_int = 96
 	for i in range(1,27):
 		alphabet_dict[chr(starter_int+i)] = ord(chr(starter_int+i))
+	if debug:
+		print('Alphabet Dict: \n')
+		print(alphabet_dict)
 
 	maxdist = len(cn_word)+len(sl_word)
 	d[0,0] = maxdist
