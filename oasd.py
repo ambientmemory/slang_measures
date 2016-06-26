@@ -1,11 +1,12 @@
 import numpy as np
 global debug;
-debug= True
+debug= False
 '''
 Runs the optimal string alignment distance algorithm
 This computes the number of edit operations needed to
 make the strings equal under the condition that no
 substring is edited more than once
+Source: http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.50.1459
 '''
 
 def osa_dist(cn_word, sl_word):
