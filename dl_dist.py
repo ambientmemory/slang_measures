@@ -28,10 +28,10 @@ def dl_dist(cn_word, sl_word):
 	alphabet_dict={}
 	starter_int = 96
 	for i in range(1,27):
-		alphabet_dict[chr(starter_int+i)] = ord(chr(starter_int+i))
-	if debug:
-		print('Alphabet Dict: \n')
-		print(alphabet_dict)
+		alphabet_dict[ord(chr(starter_int+i))] = chr(starter_int+i)
+	#if debug:
+	#	print('Alphabet Dict: \n')
+	#	print(alphabet_dict)
 
 	maxdist = len(cn_word)+len(sl_word)
 	d[0,0] = maxdist
@@ -46,11 +46,17 @@ def dl_dist(cn_word, sl_word):
 	for i in range(1, len(cn_word)):
 		db = 0
 		for j in range(1, len(sl_word)):
-			da_idx = alphabet_dict[ord(sl_word[j])]%97
-			if debug:
-				print("da_idx: ", da_idx)
+			#if debug:
+				#print("sl_word[j]: ", sl_word[j])
+				#print("ord(sl_word[j]): ", ord(sl_word[j]))
+				##print("alphabet_dict[ord(sl_word[j]): ", alphabet_dict[ord(sl_word[j])%97]) returns 22
+				#print("alphabet_dict[ord(sl_word[j]): ", alphabet_dict[ord(sl_word[j])])
+				#print("mod 97: ", alphabet_dict[ord(sl_word[j])])
+				#print("da_idx: ", da_idx)
+			#da_idx = alphabet_dict[ord(sl_word[j])]
+			#da_idx = ord(sl_word[j])%97
 
-			k = da[da_idx]
+			k = da[ord(sl_word[j])%97]
 			l = db
 			if cn_word[i] == sl_word[j]:
 				cost = 0
