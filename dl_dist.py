@@ -26,19 +26,20 @@ def dl_dist(cn_word, sl_word):
 	maxdist = len(cn_word)+len(sl_word)
 	d[0,0] = maxdist
 
-	for i in range(0, len(cn_word)+2):
+	for i in range(1, len(cn_word)+2):
 		d[i, 0] = maxdist
-		d[i, 1] = i
-	for j in range(0, len(sl_word)+2):
+		d[i, 1] = i-1
+	for j in range(1, len(sl_word)+2):
 		d[0, j] = maxdist
-		d[1, j] = j
-	if debug:
+		d[1, j] = j-1
+	'''if debug:
 		print("d initialized as: \n")
 		print(d)
+	'''
 
-	for i in range(1, len(cn_word)):
+	for i in range(1, len(cn_word)+1):
 		db = 0
-		for j in range(1, len(sl_word)):
+		for j in range(1, len(sl_word)+1):
 			k = da[ord(sl_word[j])%97]
 			l = db
 			if cn_word[i] == sl_word[j]:
@@ -46,20 +47,20 @@ def dl_dist(cn_word, sl_word):
 				db = j
 			else:
 				cost = 1
-			d[i+1, j+1] = min([ d[i,j]+cost,
-			                    d[i+1,j]+1,
-			                    d[i,j+1] +1,
-			                    d[k, l] + (i-k-1)+ 1 + (j-l-1)
+			d[i, j] = min([ d[i-1,j-1]+cost,
+			                    d[i,j-1]+1,
+			                    d[i-1,j] +1,
+			                    d[k-1, l-1] + (i-k-1)+ 1 + (j-l-1)
 			                    ])
+			if debug:
+				print("Debug: i = ", i, "\n")
+				print("Debug: j = ", j, "\n")
+				print("Debug: da = ", da, "\n")
+				print("Debug: db = ", db, "\n")
+				print("Debug: d = \n")
+				print(d)
 		da[ord(cn_word[i])%97] = i
 
-		if debug:
-			print("Debug: i = ", i, "\n")
-			print("Debug: j = ", j, "\n")
-			print("Debug: d_canon = ", da, "\n")
-			print("Debug: d_slang = ", db, "\n")
-			print("Debug: d = \n")
-			print(d)
 
 	return d[len(cn_word)+1, len(sl_word)+1]
 
