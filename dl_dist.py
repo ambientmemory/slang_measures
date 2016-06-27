@@ -32,14 +32,13 @@ def dl_dist(cn_word, sl_word):
 	for j in range(1, len(sl_word)+2):
 		d[0, j] = maxdist
 		d[1, j] = j-1
-	'''if debug:
-		print("d initialized as: \n")
-		print(d)
-	'''
+	#if debug:
+	#	print("d initialized as: \n")
+	#	print(d)
 
-	for i in range(1, len(cn_word)+1):
+	for i in range(0, len(cn_word)):
 		db = 0
-		for j in range(1, len(sl_word)+1):
+		for j in range(0, len(sl_word)):
 			k = da[ord(sl_word[j])%97]
 			l = db
 			if cn_word[i] == sl_word[j]:
@@ -55,14 +54,14 @@ def dl_dist(cn_word, sl_word):
 			if debug:
 				print("Debug: i = ", i, "\n")
 				print("Debug: j = ", j, "\n")
-				print("Debug: da = ", da, "\n")
+				#print("Debug: da = ", da, "\n")
 				print("Debug: db = ", db, "\n")
 				print("Debug: d = \n")
 				print(d)
 		da[ord(cn_word[i])%97] = i
 
 
-	return d[len(cn_word)+1, len(sl_word)+1]
+	return d[len(cn_word), len(sl_word)]
 
 
 sl_word = input("Please enter slang word: ")
