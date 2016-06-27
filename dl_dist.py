@@ -21,17 +21,14 @@ def dl_dist(cn_word, sl_word):
 
 	#second parameter here is the size of the alphabet
 	da = np.zeros((26,))
-	d = np.zeros((len(cn_word)+1, len(sl_word)+1))
+	d = np.zeros((len(cn_word)+2, len(sl_word)+2))
 
-	#building the alphabet dictionaries here
+	# building the alphabet dictionaries here
 	# ascii: little a = 97
 	alphabet_dict={}
 	starter_int = 96
 	for i in range(1,27):
 		alphabet_dict[ord(chr(starter_int+i))] = chr(starter_int+i)
-	#if debug:
-	#	print('Alphabet Dict: \n')
-	#	print(alphabet_dict)
 
 	maxdist = len(cn_word)+len(sl_word)
 	d[0,0] = maxdist
@@ -46,16 +43,6 @@ def dl_dist(cn_word, sl_word):
 	for i in range(1, len(cn_word)):
 		db = 0
 		for j in range(1, len(sl_word)):
-			#if debug:
-				#print("sl_word[j]: ", sl_word[j])
-				#print("ord(sl_word[j]): ", ord(sl_word[j]))
-				##print("alphabet_dict[ord(sl_word[j]): ", alphabet_dict[ord(sl_word[j])%97]) returns 22
-				#print("alphabet_dict[ord(sl_word[j]): ", alphabet_dict[ord(sl_word[j])])
-				#print("mod 97: ", alphabet_dict[ord(sl_word[j])])
-				#print("da_idx: ", da_idx)
-			#da_idx = alphabet_dict[ord(sl_word[j])]
-			#da_idx = ord(sl_word[j])%97
-
 			k = da[ord(sl_word[j])%97]
 			l = db
 			if cn_word[i] == sl_word[j]:
@@ -68,7 +55,7 @@ def dl_dist(cn_word, sl_word):
 			                    d[i,j+1] +1,
 			                    d[k, l] + (i-k-1)+ 1 + (j-l-1)
 			                    ])
-		da[cn_word[i]] = i
+		da[ord(cn_word[i])%97] = i
 
 		if debug:
 			print("Debug: i = ", i, "\n")
