@@ -19,26 +19,22 @@ def dl_dist(cn_word, sl_word):
 	:return: int distance
 	'''
 
-	#second parameter here is the size of the alphabet
+	#size of the alphabet required here
 	da = np.zeros((26,))
 	d = np.zeros((len(cn_word)+2, len(sl_word)+2))
-
-	# building the alphabet dictionaries here
-	# ascii: little a = 97
-	alphabet_dict={}
-	starter_int = 96
-	for i in range(1,27):
-		alphabet_dict[ord(chr(starter_int+i))] = chr(starter_int+i)
 
 	maxdist = len(cn_word)+len(sl_word)
 	d[0,0] = maxdist
 
-	for i in range(0, len(cn_word)):
+	for i in range(0, len(cn_word)+2):
 		d[i, 0] = maxdist
 		d[i, 1] = i
-	for j in range(0, len(sl_word)):
+	for j in range(0, len(sl_word)+2):
 		d[0, j] = maxdist
 		d[1, j] = j
+	if debug:
+		print("d initialized as: \n")
+		print(d)
 
 	for i in range(1, len(cn_word)):
 		db = 0
