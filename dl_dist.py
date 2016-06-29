@@ -21,6 +21,8 @@ def dl_dist(cn_word, sl_word):
 
 	#size of the alphabet required here
 	da = np.zeros((26,))
+	if debug:
+		print("Debug: da: ", da)
 	d = np.zeros((len(cn_word)+2, len(sl_word)+2))
 
 	maxdist = len(cn_word)+len(sl_word)
@@ -36,21 +38,25 @@ def dl_dist(cn_word, sl_word):
 	#	print("d initialized as: \n")
 	#	print(d)
 
-	for i in range(0, len(cn_word)):
+	for i in range(1, len(cn_word)+2):
 		db = 0
-		for j in range(0, len(sl_word)):
-			k = da[ord(sl_word[j])%97]
+		for j in range(1, len(sl_word)+2):
+			if debug:
+				print("Debug: j is at: ", j, "-> String member at sl_word[j-1]:", sl_word[(j-1)])
+				print("Debug: da_idx: ", ord(sl_word[(j-1)])-ord('a')+1)
+				print("Debug: da_at_idx:", da[ord(sl_word[(j-1)])-ord('a')+1])
+			k = da[ord(sl_word[(j-1)])-ord('a')+1]
 			l = db
-			if cn_word[i] == sl_word[j]:
+			if cn_word[i-1] == sl_word[j-1]:
 				cost = 0
 				db = j
 			else:
 				cost = 1
-			d[i, j] = min([ d[i-1,j-1]+cost,
-			                    d[i,j-1]+1,
-			                    d[i-1,j] +1,
-			                    d[k-1, l-1] + (i-k-1)+ 1 + (j-l-1)
-			                    ])
+			d[i, j] = min([d[i-1,j-1]+cost,
+			               d[i,j-1]+1,
+			               d[i-1,j] +1,
+			               d[k-1, l-1] + (i-k-1)+ 1 + (j-l-1)
+			               ])
 			if debug:
 				print("Debug: i = ", i, "\n")
 				print("Debug: j = ", j, "\n")
@@ -58,7 +64,7 @@ def dl_dist(cn_word, sl_word):
 				print("Debug: db = ", db, "\n")
 				print("Debug: d = \n")
 				print(d)
-		da[ord(cn_word[i])%97] = i
+		da[ord(cn_word[i-1])%97] = i-1
 
 
 	return d[len(cn_word), len(sl_word)]
